@@ -1,0 +1,45 @@
+{
+    "schedule": [
+        [
+            "diena1-pamoka1",
+            "diena1-pamoka2",
+            "diena1-pamoka3",
+            "diena1-pamoka4",
+            "diena1-pamoka5"
+        ],
+        [
+            "diena2-pamoka1",
+            "diena2-pamoka2",
+            "diena2-pamoka3",
+            "diena2-pamoka4",
+            "diena2-pamoka5",
+            "diena2-pamoka6"
+        ],
+        [
+            "diena3-pamoka1",
+            "diena3-pamoka2",
+            "diena3-pamoka3",
+            "diena3-pamoka4",
+            "diena3-pamoka5",
+            "diena3-pamoka6",
+            "diena3-pamoka7"
+        ],
+        [
+            "diena2-pamoka1",
+            "diena2-pamoka2",
+            "diena2-pamoka3",
+            "diena2-pamoka4",
+            "diena2-pamoka5",
+            "diena2-pamoka6"
+        ],
+        [
+            "diena1-pamoka1",
+            "diena1-pamoka2",
+            "diena1-pamoka3",
+            "diena1-pamoka4",
+            "diena1-pamoka5"
+        ],
+        [],
+        []
+    ]
+}
