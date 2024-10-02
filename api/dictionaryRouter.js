@@ -72,17 +72,21 @@ dictionaryRouter.put('/', (req, res) => {
 });
 
 dictionaryRouter.delete('/', (req, res) => {
-    console.log('PARAMS:', req.query.word);
+    console.log('PARAMS:', req.query);
     console.log('JSON:', req.body);
-    console.log(dictionary[0] !== req.query.word);
+
 
     if (dictionary.includes(req.query.word)) {
-        dictionary.filter((string) => string === req.query.word);
+        for (let i = 0; i < dictionary.length; i++) {
+            if (dictionary[i] === req.query.word) {
+                dictionary.splice(i, 1);
+            }
+        }
 
         return res.status(201).json({
             status: 'success',
             msg: `zodis ${req.query.word} istrintas`,
         });
     }
-    return res.status(501).send('(DELETE) DICTIONARY: Not implemented');
+    return res.status(501).send('(DELETE) DICTIONARY: something went wrong');
 });
