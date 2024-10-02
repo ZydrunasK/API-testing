@@ -12,7 +12,7 @@ carsRouter.get('/', (req, res) => {
 
 carsRouter.post('/', (req, res) => {
 
-    const requiredKeys = ['brand', 'model']
+    const requiredKeys = ['brand', 'model', 'id'];
 
     if (Object.keys(req.body).length !== requiredKeys.length) {
         return res.status(400).json({
@@ -22,10 +22,11 @@ carsRouter.post('/', (req, res) => {
     }
 
     if (typeof req.body.model !== 'string'
-        || typeof req.body.brand !== 'string') {
+        || typeof req.body.brand !== 'string'
+        || typeof req.body.id !== 'number') {
         return res.status(400).json({
             status: 'error',
-            msg: 'leidziami tik string tipo duomenys',
+            msg: 'neteisingi duomenu tipai',
         });
     }
 
@@ -36,4 +37,22 @@ carsRouter.post('/', (req, res) => {
         status: 'success',
         msg: `i cars masyva itraukta ${req.body.brand} ${req.body.model}`,
     });
-})
+});
+
+carsRouter.put('/', (req, res) => {
+
+    for (let i = 0; i < cars.length; i++) {
+        if (cars[i].id === req.body.id) {
+            cars[i].price = req.body.price;
+            return res.status(200).json({
+                status: 'success',
+                msg: `prideta kaina automobiliu id:${req.body.id}`,
+            });
+        }  
+    }
+
+    return res.status(400).json({
+        status: 'error',
+        msg: 'kazkas negerai',
+    });
+});
