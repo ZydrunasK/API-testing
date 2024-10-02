@@ -1,8 +1,6 @@
 import e from "express";
 
-const dictionary = [];
-
-
+let dictionary = [];
 
 export const dictionaryRouter = e.Router();
 
@@ -68,25 +66,46 @@ dictionaryRouter.post('/', (req, res) => {
 });
 
 dictionaryRouter.put('/', (req, res) => {
+
+
+    
     return res.status(501).send('(PUT) DICTIONARY: Not implemented');
 });
 
-dictionaryRouter.delete('/', (req, res) => {
-    console.log('PARAMS:', req.query);
-    console.log('JSON:', req.body);
+// dictionaryRouter.delete('/', (req, res) => {
+//     console.log('QUERY:', req.query);
+//     console.log('JSON:', req.body);
 
+//     if (!dictionary.includes(req.query.word)) {
+//         return res.status(400).json({
+//             status: 'error',
+//             msg: 'Toks zodis neegzistuoja',
+//         });
+//     }
 
-    if (dictionary.includes(req.query.word)) {
-        for (let i = 0; i < dictionary.length; i++) {
-            if (dictionary[i] === req.query.word) {
-                dictionary.splice(i, 1);
-            }
-        }
+//     dictionary = dictionary.filter(w => w !== req.query.word);
 
-        return res.status(201).json({
-            status: 'success',
-            msg: `zodis ${req.query.word} istrintas`,
+//     return res.status(200).json({
+//         status: 'error',
+//         msg: 'zodis istrintas',
+//     });
+
+// });
+
+dictionaryRouter.delete('/:word', (req, res) => {
+    console.log();
+    
+    if (!dictionary.includes(req.params.word)) {
+        return res.status(400).json({
+            status: 'error',
+            msg: 'Toks zodis neegzistuoja',
         });
     }
-    return res.status(501).send('(DELETE) DICTIONARY: something went wrong');
+
+    dictionary = dictionary.filter(w => w !== req.params.word);
+
+    return res.status(200).json({
+        status: 'error',
+        msg: 'zodis istrintas',
+    });
 });

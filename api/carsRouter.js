@@ -46,7 +46,7 @@ carsRouter.put('/', (req, res) => {
             cars[i].price = req.body.price;
             return res.status(200).json({
                 status: 'success',
-                msg: `prideta kaina automobiliui su id: ${req.body.id}`,
+                msg: `prideta kaina: ${req.body.price}, automobiliui su id: ${req.body.id}`,
             });
         }  
     }
