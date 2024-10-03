@@ -58,22 +58,24 @@ scheduleRouter.put('/:dienosID', (req, res) => {
 });
 
 scheduleRouter.patch('/:dienosID/:pamokosID', (req, res) => {
-    const [isValid, msg] = isValidLesson(req.body);
-    const dienosID = req.params.dienosID - 1;
-    const pamokosID = req.params.pamokosID - 1;
-
+    
     if (Object.keys(week).length !== 1) {
         return res.status(400).json({
             status: 'error',
             msg: `nera tvarkarascio`
         });
     }
+
+    const dienosID = req.params.dienosID - 1;
+    const pamokosID = req.params.pamokosID - 1;
     if (week.schedule[dienosID][pamokosID] === undefined) {
         return res.status(400).json({
             status: 'error',
             msg: `nera pamokos ${pamokosID + 1}`
         });
     }
+    
+    const [isValid, msg] = isValidLesson(req.body);
     if (isValid) {
         week.schedule[dienosID][pamokosID] = req.body.lesson;
         return res.status(200).json({
