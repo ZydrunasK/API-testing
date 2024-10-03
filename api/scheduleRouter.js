@@ -1,5 +1,7 @@
 import e from "express";
 import { isValidWeekSchedule } from "../lib/isValidWeekSchedule.js";
+import { isValidDaySchedule } from "../lib/isValidDaySchedule.js";
+import { isValidLesson } from "../lib/isValidLesson.js";
 
 let week = {};
 
@@ -29,32 +31,61 @@ scheduleRouter.get('/:dienosID', (req, res) => {
 });
 
 scheduleRouter.put('/:dienosID', (req, res) => {
-    const [isValid, msg] = isValidWeekSchedule(req.body, 1);
+    const [isValid, msg] = isValidDaySchedule(req.body);
     if (isValid) {
         week.schedule[req.params.dienosID - 1] = req.body.schedule;
         return res.status(200).json({
             status: 'success',
-            msg: 'visos dienos pamokos pakeistos'
+            msg: 'dienos pamokos pakeistos'
         });
     }
     return res.status(400).json({
         status: 'error',
         msg: msg
     });
-
-    
-    return res.status(200).json(week.schedule[req.params.dienosID - 1]);
 });
 
 scheduleRouter.patch('/:dienosID/:pamokosID', (req, res) => {
+    const [isValid, msg] = isValidLesson(req.body);
     const dienosID = req.params.dienosID - 1;
     const pamokosID = req.params.pamokosID - 1;
-    week.schedule[dienosID][pamokosID] = req.body.class;
-    return res.status(200).json(week.schedule[dienosID][pamokosID]);
+
+    if (Object.keys(week).length !== 1) {
+        return res.status(400).json({
+            status: 'error',
+            msg: `nera tvarkarascio`
+        });
+    }
+    if (week.schedule[dienosID][pamokosID] === undefined) {
+        return res.status(400).json({
+            status: 'error',
+            msg: `nera pamokos ${pamokosID + 1}`
+        });
+    }
+    if (isValid) {
+        week.schedule[dienosID][pamokosID] = req.body.lesson;
+        return res.status(200).json({
+            status: 'success',
+            msg: `pamoka ${pamokosID + 1} pakeista`
+        });
+    }
+    return res.status(400).json({
+        status: 'error',
+        msg: msg
+    });
 });
 
 scheduleRouter.delete('/:dienosID', (req, res) => {
-    const dienosID = req.params.dienosID - 1;
-    week.schedule[dienosID] = [];
-    return res.status(200).json(week.schedule[dienosID]);
+    if (Object.keys(week).length === 1) {
+        const dienosID = req.params.dienosID - 1;
+        week.schedule[dienosID] = [];
+        return res.status(200).json({
+            status: 'success',
+            msg: `dienos pamokos istrintos`
+        });
+    }
+    return res.status(400).json({
+        status: 'error',
+        msg: 'nera ko trinti'
+    });
 });
