@@ -23,11 +23,23 @@ scheduleRouter.post('/', (req, res) => {
 });
 
 scheduleRouter.get('/', (req, res) => {
-    return res.status(200).json(week);
+    if (Object.keys(week).length === 1) {
+        return res.status(200).json(week);
+    }
+    return res.status(400).json({
+        status: 'error',
+        msg: 'nera ko grazinti'
+    });
 });
 
 scheduleRouter.get('/:dienosID', (req, res) => {
-    return res.status(200).json(week.schedule[req.params.dienosID - 1]);
+    if (Array.isArray(week.schedule[req.params.dienosID - 1])) {
+        return res.status(200).json(week.schedule[req.params.dienosID - 1]);
+    }
+    return res.status(400).json({
+        status: 'error',
+        msg: 'nera ko grazinti'
+    });
 });
 
 scheduleRouter.put('/:dienosID', (req, res) => {
