@@ -99,7 +99,6 @@ scheduleRouter.patch('/:dienosID/:pamokosID', (req, res) => {
         });
     }
 
-    
     const [isValid, msg] = isValidLesson(req.body);
     if (!isValid) {
         return res.status(400).json({
@@ -109,6 +108,7 @@ scheduleRouter.patch('/:dienosID/:pamokosID', (req, res) => {
     }
 
     week.schedule[dayId][lessonId] = req.body.lesson;
+    week.schedule[dayId] = week.schedule[dayId].map(s => s === null ? "-" : s)
     return res.status(200).json({
         status: 'success',
         msg: `dienos ${dayId + 1} pamoka ${lessonId + 1} pakeista`
