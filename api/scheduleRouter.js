@@ -108,8 +108,12 @@ scheduleRouter.patch('/:dienosID/:pamokosID', (req, res) => {
     }
 
     week.schedule[dayId][lessonId] = req.body.lesson;
-    console.log(week.schedule[dayId]);
-    
+    for (let i = 0; i < week.schedule[dayId].length; i++) {
+        if (typeof week.schedule[dayId][i] !== 'string') {
+            week.schedule[dayId][i] = "---";
+        }
+    }
+     
     return res.status(200).json({
         status: 'success',
         msg: `dienos ${dayId + 1} pamoka ${lessonId + 1} pakeista`
