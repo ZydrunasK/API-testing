@@ -136,7 +136,7 @@ scheduleRouter.delete('/:dienosID', (req, res) => {
         });
     }
 
-    week.schedule[dienosID] = [];
+    week.schedule[id] = [];
     return res.status(200).json({
         status: 'success',
         msg: `dienos ${id + 1} pamokos istrintos`
